@@ -19,4 +19,4 @@ Static GitHub Pages site for focused open-source products.
 
 ## Site boundary
 
-The site uses plain HTML and CSS with no analytics, cookies, forms, external fonts, or third-party scripts.
+The site uses plain HTML and CSS with no forms or external fonts. Google Analytics 4 measures product discovery and navigation with Measurement ID `G-8JHM6JYCK9`; the bilingual privacy pages describe the resulting cookies and data flow.

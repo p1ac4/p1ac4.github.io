@@ -2,6 +2,9 @@
 
 Focused, local-first open-source products for real software compatibility gaps.
 
+- Privacy: https://p1ac4.github.io/privacy/
+- Chinese privacy: https://p1ac4.github.io/zh/privacy/
+
 ## APIdapter
 
 APIdapter is a local OpenAI-compatible adapter for using DeepSeek V4 Flash in Raycast with streaming reasoning and multi-turn tool calls.
