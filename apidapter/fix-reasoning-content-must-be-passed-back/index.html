@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fix “reasoning_content must be passed back” in Raycast</title>
+  <meta name="description" content="Why DeepSeek tool calls fail when Raycast does not replay reasoning_content, how APIdapter repairs the tool-turn state, and how to fix reasoning_state_missing.">
+  <link rel="canonical" href="https://p1ac4.github.io/apidapter/fix-reasoning-content-must-be-passed-back/">
+  <link rel="alternate" hreflang="en" href="https://p1ac4.github.io/apidapter/fix-reasoning-content-must-be-passed-back/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://p1ac4.github.io/apidapter/zh/fix-reasoning-content-must-be-passed-back/">
+  <link rel="alternate" hreflang="x-default" href="https://p1ac4.github.io/apidapter/fix-reasoning-content-must-be-passed-back/">
+  <meta property="og:title" content="Fix DeepSeek reasoning_content replay in Raycast">
+  <meta property="og:description" content="Understand and repair the missing reasoning state between tool turns.">
+  <meta property="og:url" content="https://p1ac4.github.io/apidapter/fix-reasoning-content-must-be-passed-back/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Fix reasoning_content must be passed back in Raycast",
+    "description": "How APIdapter repairs missing DeepSeek reasoning state between Raycast tool turns.",
+    "mainEntityOfPage": "https://p1ac4.github.io/apidapter/fix-reasoning-content-must-be-passed-back/",
+    "inLanguage": "en",
+    "about": ["DeepSeek", "Raycast", "reasoning_content", "tool calling"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="shell site-header">
+    <a class="brand" href="/apidapter/">APIdapter</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="/apidapter/">Overview</a>
+      <a href="/apidapter/compatibility/">Compatibility</a>
+      <a href="https://github.com/p1ac4/APIdapter">Source</a>
+      <a lang="zh-Hans" href="/apidapter/zh/fix-reasoning-content-must-be-passed-back/">中文</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <article>
+      <section class="shell hero">
+        <p class="eyebrow">Troubleshooting · DeepSeek tool calls</p>
+        <h1>Fix “reasoning_content must be passed back” in Raycast.</h1>
+        <p class="lede">The error appears when a DeepSeek thinking-mode tool call is followed by another request that omits the model's earlier <code>reasoning_content</code>. Raycast currently does not replay that provider-specific field.</p>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <h2>What is happening</h2>
+          <div class="grid">
+            <article class="card">
+              <h3>1. DeepSeek reasons and calls a tool</h3>
+              <p>The model response contains both a tool call and provider-required <code>reasoning_content</code>.</p>
+            </article>
+            <article class="card">
+              <h3>2. Raycast runs the tool</h3>
+              <p>Raycast sends the tool result in the next Chat Completions request, but does not include the earlier DeepSeek reasoning field.</p>
+            </article>
+            <article class="card">
+              <h3>3. DeepSeek rejects the continuation</h3>
+              <p>The provider cannot validate the thinking-mode tool turn without the required reasoning state.</p>
+            </article>
+          </div>
+          <div class="notice">
+            <strong>APIdapter's repair</strong>
+            APIdapter captures only the required reasoning state, keeps it in bounded memory, and attaches it to the matching assistant tool-call message on the next request.
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <h2>How to fix it</h2>
+          <ol class="steps">
+            <li><strong>Start APIdapter before opening the Raycast chat.</strong> Verify <code>http://127.0.0.1:48765/healthz</code>.</li>
+            <li><strong>Use APIdapter as Raycast's base URL.</strong> A direct request to DeepSeek bypasses the state repair.</li>
+            <li><strong>Keep APIdapter running for the whole tool loop.</strong> Restarting it clears the in-memory reasoning state.</li>
+            <li><strong>Start a new chat after a restart.</strong> An old conversation can refer to state that no longer exists.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <h2>If APIdapter returns <code>reasoning_state_missing</code></h2>
+          <p class="section-intro">The matching state was cleared because the daemon restarted, the configured TTL expired, or a capacity bound evicted it. This is intentional: APIdapter does not persist conversation state to disk.</p>
+          <div class="actions">
+            <a class="button" href="/apidapter/#download">Download APIdapter</a>
+            <a class="button secondary" href="https://api-docs.deepseek.com/guides/thinking_mode/">Read DeepSeek's thinking-mode contract</a>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="shell site-footer">
+    <p>Applies to APIdapter v0.1.0 and its supported Raycast path.</p>
+    <p><a href="https://github.com/p1ac4/APIdapter/issues">Report a different failure</a></p>
+  </footer>
+</body>
+</html>

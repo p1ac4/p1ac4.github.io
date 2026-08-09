@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APIdapter — Use DeepSeek V4 Flash in Raycast</title>
+  <meta name="description" content="APIdapter is a local OpenAI-compatible adapter for running DeepSeek V4 Flash in Raycast with streaming reasoning and multi-turn tool calls. Download v0.1.0 for macOS.">
+  <link rel="canonical" href="https://p1ac4.github.io/apidapter/">
+  <link rel="alternate" hreflang="en" href="https://p1ac4.github.io/apidapter/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://p1ac4.github.io/apidapter/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://p1ac4.github.io/apidapter/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="APIdapter — DeepSeek V4 Flash compatibility for Raycast">
+  <meta property="og:description" content="Local compatibility adapter with streaming reasoning and multi-turn tool calls.">
+  <meta property="og:url" content="https://p1ac4.github.io/apidapter/">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "APIdapter",
+        "description": "A local OpenAI-compatible adapter for running DeepSeek V4 Flash in Raycast with streaming reasoning and multi-turn tool calls.",
+        "url": "https://p1ac4.github.io/apidapter/",
+        "codeRepository": "https://github.com/p1ac4/APIdapter",
+        "downloadUrl": "https://github.com/p1ac4/APIdapter/releases/tag/v0.1.0",
+        "softwareVersion": "0.1.0",
+        "operatingSystem": "macOS",
+        "applicationCategory": "DeveloperApplication",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "isAccessibleForFree": true
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="shell site-header">
+    <a class="brand" href="/apidapter/">APIdapter</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#download">Download</a>
+      <a href="#setup">Setup</a>
+      <a href="/apidapter/compatibility/">Compatibility</a>
+      <a href="https://github.com/p1ac4/APIdapter">Source</a>
+      <a lang="zh-Hans" href="/apidapter/zh/">中文</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="shell hero">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Raycast × DeepSeek V4 Flash</p>
+          <h1>Make DeepSeek V4 Flash work properly in Raycast.</h1>
+          <p class="lede">Local adapter. Live reasoning. Multi-turn tools.</p>
+          <div class="route" aria-label="Request route">
+            <span>Raycast</span><i aria-hidden="true"></i><span>APIdapter</span><i aria-hidden="true"></i><span>DeepSeek</span>
+          </div>
+          <div class="actions">
+            <a class="button" href="#download">Download v0.1.0</a>
+            <a class="button secondary" href="https://github.com/p1ac4/APIdapter">View source</a>
+          </div>
+        </div>
+        <aside class="hero-note" aria-label="Release status">
+          <strong>v0.1.0</strong>
+          <p>macOS · Apache-2.0 · pre-release</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <p class="eyebrow">Compatibility repair</p>
+        <h2>Reasoning in. Tools through.</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Stream reasoning</h3>
+            <p>Maps <code>reasoning_content</code> for Raycast in both stream and final response.</p>
+          </article>
+          <article class="card">
+            <h3>Continue tool calls</h3>
+            <p>Replays the required state between tool turns.</p>
+          </article>
+          <article class="card">
+            <h3>Stay local</h3>
+            <p>Loopback-only. No content or key persistence by default.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="download">
+      <div class="shell">
+        <p class="eyebrow">Download</p>
+        <h2>APIdapter v0.1.0 for macOS</h2>
+        <p class="section-intro">Apple silicon or Intel. Run <code>chmod +x</code> after downloading.</p>
+        <div class="grid">
+          <article class="card">
+            <h3>Apple silicon</h3>
+            <p>M1, M2, M3, M4, and later Apple silicon Macs.</p>
+            <p><a class="button" href="https://github.com/p1ac4/APIdapter/releases/download/v0.1.0/apidapter_v0.1.0_darwin_arm64">Download arm64</a></p>
+          </article>
+          <article class="card">
+            <h3>Intel Mac</h3>
+            <p>64-bit Intel-based Macs.</p>
+            <p><a class="button" href="https://github.com/p1ac4/APIdapter/releases/download/v0.1.0/apidapter_v0.1.0_darwin_amd64">Download amd64</a></p>
+          </article>
+          <article class="card">
+            <h3>Verify the download</h3>
+            <p>Compare the downloaded binary against the published SHA-256 checksums.</p>
+            <p><a class="button secondary" href="https://github.com/p1ac4/APIdapter/releases/download/v0.1.0/apidapter_v0.1.0_checksums.txt">Download checksums</a></p>
+          </article>
+        </div>
+        <div class="notice">
+          <strong>Bring your own DeepSeek API key.</strong>
+          APIdapter does not sell model access.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="setup">
+      <div class="shell">
+        <p class="eyebrow">Quick setup</p>
+        <h2>Four steps. Then open Raycast.</h2>
+        <ol class="steps">
+          <li>
+            <strong>Make the binary executable and start it.</strong>
+            <pre><code>chmod +x apidapter_v0.1.0_darwin_arm64
+./apidapter_v0.1.0_darwin_arm64</code></pre>
+          </li>
+          <li>
+            <strong>Verify the local health endpoint.</strong>
+            <pre><code>curl http://127.0.0.1:48765/healthz</code></pre>
+          </li>
+          <li>
+            <strong>Configure Raycast Custom Provider.</strong>
+            <p>Use the repository's <a href="https://github.com/p1ac4/APIdapter/blob/main/examples/raycast-providers.yaml">provider example</a>, set its base URL to <code>http://127.0.0.1:48765</code>, and replace the placeholder with your own DeepSeek API key.</p>
+          </li>
+          <li>
+            <strong>Select tools in Raycast.</strong>
+            <p>Choose DeepSeek V4 Flash, then add the required AI Extension with <code>@</code>. APIdapter makes exposed tools compatible; it does not invent tools Raycast did not send.</p>
+          </li>
+        </ol>
+        <div class="actions">
+          <a class="button secondary" href="https://github.com/p1ac4/APIdapter/blob/main/docs/raycast.md">Complete Raycast guide</a>
+          <a class="button secondary" href="/apidapter/fix-reasoning-content-must-be-passed-back/">Troubleshoot reasoning replay</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="shell">
+        <p class="eyebrow">Details</p>
+        <h2>Release boundaries</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>Real-time output</h3>
+            <p>SSE text and reasoning are forwarded as they arrive.</p>
+          </article>
+          <article class="card">
+            <h3>Clients</h3>
+            <p>v0.1.0 supports Raycast only. VS Code and Warp come later.</p>
+          </article>
+          <article class="card">
+            <h3>Port</h3>
+            <p>Use <code>--listen 127.0.0.1:49000</code> or JSON <code>listen</code>.</p>
+          </article>
+          <article class="card">
+            <h3>Data</h3>
+            <p>Raycast → local adapter → official DeepSeek API. No disk persistence by default.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell site-footer">
+    <p>APIdapter is open source under Apache-2.0.</p>
+    <p><a href="/">All products</a> · <a href="https://github.com/p1ac4/APIdapter/releases/tag/v0.1.0">Release notes</a></p>
+  </footer>
+</body>
+</html>

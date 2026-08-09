@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APIdapter — 在 Raycast 中使用 DeepSeek V4 Flash</title>
+  <meta name="description" content="APIdapter 是本机 OpenAI-compatible adapter，让 DeepSeek V4 Flash 在 Raycast 中支持实时 reasoning 与 multi-turn tool calls。下载 macOS v0.1.0。">
+  <link rel="canonical" href="https://p1ac4.github.io/apidapter/zh/">
+  <link rel="alternate" hreflang="en" href="https://p1ac4.github.io/apidapter/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://p1ac4.github.io/apidapter/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://p1ac4.github.io/apidapter/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="APIdapter — Raycast 的 DeepSeek V4 Flash 兼容层">
+  <meta property="og:description" content="本机 compatibility adapter，支持 streaming reasoning 与 multi-turn tool calls。">
+  <meta property="og:url" content="https://p1ac4.github.io/apidapter/zh/">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "APIdapter",
+        "description": "让 DeepSeek V4 Flash 在 Raycast 中支持实时 reasoning 与 multi-turn tool calls 的本机 OpenAI-compatible adapter。",
+        "url": "https://p1ac4.github.io/apidapter/zh/",
+        "codeRepository": "https://github.com/p1ac4/APIdapter",
+        "downloadUrl": "https://github.com/p1ac4/APIdapter/releases/tag/v0.1.0",
+        "softwareVersion": "0.1.0",
+        "operatingSystem": "macOS",
+        "applicationCategory": "DeveloperApplication",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "isAccessibleForFree": true,
+        "inLanguage": "zh-Hans"
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="shell site-header">
+    <a class="brand" href="/apidapter/zh/">APIdapter</a>
+    <nav class="nav" aria-label="主导航">
+      <a href="#download">下载</a>
+      <a href="#setup">配置</a>
+      <a href="/apidapter/zh/compatibility/">兼容范围</a>
+      <a href="https://github.com/p1ac4/APIdapter">源码</a>
+      <a lang="en" href="/apidapter/">English</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="shell hero">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Raycast × DeepSeek V4 Flash</p>
+          <h1>让 DeepSeek V4 Flash 在 Raycast 里完整工作。</h1>
+          <p class="lede">本机 adapter。实时 reasoning。连续 tool calls。</p>
+          <div class="route" aria-label="请求路径">
+            <span>Raycast</span><i aria-hidden="true"></i><span>APIdapter</span><i aria-hidden="true"></i><span>DeepSeek</span>
+          </div>
+          <div class="actions">
+            <a class="button" href="#download">下载 v0.1.0</a>
+            <a class="button secondary" href="https://github.com/p1ac4/APIdapter">查看源码</a>
+          </div>
+        </div>
+        <aside class="hero-note" aria-label="发布状态">
+          <strong>v0.1.0</strong>
+          <p>macOS · Apache-2.0 · pre-release</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <p class="eyebrow">Compatibility repair</p>
+        <h2>Reasoning 留住，tools 跑通。</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>实时 reasoning</h3>
+            <p>在 stream 与 final response 中映射 <code>reasoning_content</code>。</p>
+          </article>
+          <article class="card">
+            <h3>连续 tool calls</h3>
+            <p>在 tool turns 之间回放必需状态。</p>
+          </article>
+          <article class="card">
+            <h3>留在本机</h3>
+            <p>只监听 loopback，默认不持久化内容或 key。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="download">
+      <div class="shell">
+        <p class="eyebrow">下载</p>
+        <h2>适用于 macOS 的 APIdapter v0.1.0</h2>
+        <p class="section-intro">Apple silicon 或 Intel。下载后运行 <code>chmod +x</code>。</p>
+        <div class="grid">
+          <article class="card">
+            <h3>Apple silicon</h3>
+            <p>适用于 M1、M2、M3、M4 及后续 Apple silicon Mac。</p>
+            <p><a class="button" href="https://github.com/p1ac4/APIdapter/releases/download/v0.1.0/apidapter_v0.1.0_darwin_arm64">下载 arm64</a></p>
+          </article>
+          <article class="card">
+            <h3>Intel Mac</h3>
+            <p>适用于 64-bit Intel Mac。</p>
+            <p><a class="button" href="https://github.com/p1ac4/APIdapter/releases/download/v0.1.0/apidapter_v0.1.0_darwin_amd64">下载 amd64</a></p>
+          </article>
+          <article class="card">
+            <h3>验证下载文件</h3>
+            <p>用已发布的 SHA-256 checksums 校验下载的 binary。</p>
+            <p><a class="button secondary" href="https://github.com/p1ac4/APIdapter/releases/download/v0.1.0/apidapter_v0.1.0_checksums.txt">下载 checksums</a></p>
+          </article>
+        </div>
+        <div class="notice">
+          <strong>使用你自己的 DeepSeek API key。</strong>
+          APIdapter 不销售模型服务。
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="setup">
+      <div class="shell">
+        <p class="eyebrow">快速配置</p>
+        <h2>四步完成，然后打开 Raycast。</h2>
+        <ol class="steps">
+          <li>
+            <strong>添加 executable bit 并启动。</strong>
+            <pre><code>chmod +x apidapter_v0.1.0_darwin_arm64
+./apidapter_v0.1.0_darwin_arm64</code></pre>
+          </li>
+          <li>
+            <strong>检查本机 health endpoint。</strong>
+            <pre><code>curl http://127.0.0.1:48765/healthz</code></pre>
+          </li>
+          <li>
+            <strong>配置 Raycast Custom Provider。</strong>
+            <p>使用仓库中的 <a href="https://github.com/p1ac4/APIdapter/blob/main/examples/raycast-providers.yaml">provider 示例</a>，把 base URL 设为 <code>http://127.0.0.1:48765</code>，并将 placeholder 替换为你自己的 DeepSeek API key。</p>
+          </li>
+          <li>
+            <strong>在 Raycast 中选择 tools。</strong>
+            <p>选择 DeepSeek V4 Flash，然后用 <code>@</code> 添加所需 AI Extension。APIdapter 负责兼容 Raycast 已发送的 tools，不会凭空增加 tools。</p>
+          </li>
+        </ol>
+        <div class="actions">
+          <a class="button secondary" href="https://github.com/p1ac4/APIdapter/blob/main/README.zh-CN.md#快速开始">完整中文配置说明</a>
+          <a class="button secondary" href="/apidapter/zh/fix-reasoning-content-must-be-passed-back/">排查 reasoning replay</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="shell">
+        <p class="eyebrow">Details</p>
+        <h2>当前版本边界</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>实时输出</h3>
+            <p>SSE text 与 reasoning 到达即转发。</p>
+          </article>
+          <article class="card">
+            <h3>Clients</h3>
+            <p>v0.1.0 只支持 Raycast。VS Code 与 Warp 后续再做。</p>
+          </article>
+          <article class="card">
+            <h3>端口</h3>
+            <p>使用 <code>--listen 127.0.0.1:49000</code> 或 JSON <code>listen</code>。</p>
+          </article>
+          <article class="card">
+            <h3>数据路径</h3>
+            <p>Raycast → 本机 adapter → 官方 DeepSeek API。默认不写入磁盘。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell site-footer">
+    <p>APIdapter 以 Apache-2.0 开源。</p>
+    <p><a href="/zh/">全部产品</a> · <a href="https://github.com/p1ac4/APIdapter/releases/tag/v0.1.0">Release notes</a></p>
+  </footer>
+</body>
+</html>

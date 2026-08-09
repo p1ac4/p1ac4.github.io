@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APIdapter 兼容范围 — Raycast 与 DeepSeek V4 Flash</title>
+  <meta name="description" content="APIdapter v0.1.0 的准确兼容范围：Raycast Custom Provider、官方 DeepSeek V4 Flash、streaming reasoning、multi-turn tool calls、macOS arm64 与 amd64。">
+  <link rel="canonical" href="https://p1ac4.github.io/apidapter/zh/compatibility/">
+  <link rel="alternate" hreflang="en" href="https://p1ac4.github.io/apidapter/compatibility/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://p1ac4.github.io/apidapter/zh/compatibility/">
+  <link rel="alternate" hreflang="x-default" href="https://p1ac4.github.io/apidapter/compatibility/">
+  <meta property="og:title" content="APIdapter 兼容矩阵">
+  <meta property="og:description" content="APIdapter v0.1.0 支持、测试和暂不包含的能力。">
+  <meta property="og:url" content="https://p1ac4.github.io/apidapter/zh/compatibility/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="shell site-header">
+    <a class="brand" href="/apidapter/zh/">APIdapter</a>
+    <nav class="nav" aria-label="主导航">
+      <a href="/apidapter/zh/">产品介绍</a>
+      <a href="https://github.com/p1ac4/APIdapter">源码</a>
+      <a lang="en" href="/apidapter/compatibility/">English</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="shell hero">
+      <p class="eyebrow">Compatibility matrix · v0.1.0</p>
+      <h1>一条支持路径，完成端到端验证。</h1>
+      <p class="lede">APIdapter v0.1.0 是聚焦 Raycast 到 DeepSeek 的兼容版本。本页明确区分已验证行为与未来产品方向。</p>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <h2>支持的产品路径</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>层级</th><th>v0.1.0 支持项</th><th>边界</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>AI client</td><td>Raycast Custom Provider</td><td>Raycast 必须发送 model 和 tools。</td></tr>
+              <tr><td>本机 endpoint</td><td><code>POST /chat/completions</code> 的 OpenAI Chat Completions</td><td>只允许 loopback listener。</td></tr>
+              <tr><td>Model</td><td><code>deepseek-v4-flash</code></td><td>其他 model ID 会 fail closed。</td></tr>
+              <tr><td>Provider</td><td>官方 DeepSeek API</td><td>固定为 <code>https://api.deepseek.com/chat/completions</code>。</td></tr>
+              <tr><td>操作系统</td><td>macOS arm64 与 amd64</td><td>目前不发布 Linux 或 Windows binary。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <h2>协议行为</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>能力</th><th>状态</th><th>APIdapter 的处理</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Streaming text</td><td>支持</td><td>立即转发并 flush 每个 SSE event。</td></tr>
+              <tr><td>Streaming reasoning</td><td>支持</td><td>把 <code>reasoning_content</code> 映射到 Raycast 显示的 reasoning 字段。</td></tr>
+              <tr><td>Non-stream response</td><td>支持</td><td>在不使用 SSE 时转换最终 reasoning 字段。</td></tr>
+              <tr><td>单次 tool call</td><td>支持</td><td>规范化 request fields 与 response content。</td></tr>
+              <tr><td>Multi-turn tool calls</td><td>支持</td><td>跨 tool turns 回放受限的 provider-required reasoning state。</td></tr>
+              <tr><td>Cancellation</td><td>支持</td><td>把 client cancellation 传递给 upstream request。</td></tr>
+              <tr><td>自定义端口</td><td>支持</td><td>使用 <code>--listen</code> 或 JSON <code>listen</code> 字段。</td></tr>
+              <tr><td>Prompt 与 key 持久化</td><td>默认关闭</td><td>不记录或持久化内容与 credential。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="notice">
+          <strong>真实 completion evidence</strong>
+          该 release path 于 2026 年 8 月 9 日完成真实测试：Raycast 连续调用两次 Calculator tool，随后由 model 生成最终答案。
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <h2>暂不支持</h2>
+        <div class="grid">
+          <article class="card"><h3>其他 client</h3><p>v0.1.0 不包含 VS Code 与 Warp。</p></article>
+          <article class="card"><h3>其他 API protocol</h3><p>不包含 Anthropic API 与 OpenAI Responses API。</p></article>
+          <article class="card"><h3>其他 runtime feature</h3><p>不包含 Vision、multi-provider routing、UI 与自动后台安装。</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell site-footer">
+    <p>兼容范围以具体 release 为准。</p>
+    <p><a href="/apidapter/zh/#download">下载 v0.1.0</a> · <a href="https://github.com/p1ac4/APIdapter/issues">报告问题</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Open-source compatibility tools
+
+Focused, local-first open-source products for real software compatibility gaps.
+
+## APIdapter
+
+APIdapter is a local OpenAI-compatible adapter for using DeepSeek V4 Flash in Raycast with streaming reasoning and multi-turn tool calls.
+
+- Product overview: https://p1ac4.github.io/apidapter/
+- Chinese product overview: https://p1ac4.github.io/apidapter/zh/
+- Compatibility matrix: https://p1ac4.github.io/apidapter/compatibility/
+- Chinese compatibility matrix: https://p1ac4.github.io/apidapter/zh/compatibility/
+- Reasoning replay troubleshooting: https://p1ac4.github.io/apidapter/fix-reasoning-content-must-be-passed-back/
+- Chinese reasoning replay troubleshooting: https://p1ac4.github.io/apidapter/zh/fix-reasoning-content-must-be-passed-back/
+- Source repository: https://github.com/p1ac4/APIdapter
+- Latest release: https://github.com/p1ac4/APIdapter/releases/tag/v0.1.0
+
+Current release boundary: APIdapter v0.1.0 supports Raycast Custom Provider, the official DeepSeek V4 Flash Chat Completions API, and macOS arm64/amd64. It does not yet support VS Code, Warp, Linux, Windows, Anthropic API, Responses API, or multi-provider routing.

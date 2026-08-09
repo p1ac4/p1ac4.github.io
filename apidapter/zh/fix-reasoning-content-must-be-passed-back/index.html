@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>修复 Raycast 中的“reasoning_content must be passed back”</title>
+  <meta name="description" content="解释 Raycast 未回放 reasoning_content 时 DeepSeek tool call 为什么失败、APIdapter 如何修复 tool-turn state，以及如何处理 reasoning_state_missing。">
+  <link rel="canonical" href="https://p1ac4.github.io/apidapter/zh/fix-reasoning-content-must-be-passed-back/">
+  <link rel="alternate" hreflang="en" href="https://p1ac4.github.io/apidapter/fix-reasoning-content-must-be-passed-back/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://p1ac4.github.io/apidapter/zh/fix-reasoning-content-must-be-passed-back/">
+  <link rel="alternate" hreflang="x-default" href="https://p1ac4.github.io/apidapter/fix-reasoning-content-must-be-passed-back/">
+  <meta property="og:title" content="修复 Raycast 中的 DeepSeek reasoning_content replay">
+  <meta property="og:description" content="理解并修复 tool turns 之间缺失的 reasoning state。">
+  <meta property="og:url" content="https://p1ac4.github.io/apidapter/zh/fix-reasoning-content-must-be-passed-back/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "修复 Raycast 中的 reasoning_content must be passed back",
+    "description": "APIdapter 如何修复 Raycast tool turns 之间缺失的 DeepSeek reasoning state。",
+    "mainEntityOfPage": "https://p1ac4.github.io/apidapter/zh/fix-reasoning-content-must-be-passed-back/",
+    "inLanguage": "zh-Hans",
+    "about": ["DeepSeek", "Raycast", "reasoning_content", "tool calling"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="shell site-header">
+    <a class="brand" href="/apidapter/zh/">APIdapter</a>
+    <nav class="nav" aria-label="主导航">
+      <a href="/apidapter/zh/">产品介绍</a>
+      <a href="/apidapter/zh/compatibility/">兼容范围</a>
+      <a href="https://github.com/p1ac4/APIdapter">源码</a>
+      <a lang="en" href="/apidapter/fix-reasoning-content-must-be-passed-back/">English</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <article>
+      <section class="shell hero">
+        <p class="eyebrow">Troubleshooting · DeepSeek tool calls</p>
+        <h1>修复 Raycast 中的“reasoning_content must be passed back”。</h1>
+        <p class="lede">当 DeepSeek thinking-mode tool call 后的下一次 request 缺少前一次 model 输出的 <code>reasoning_content</code> 时，就会出现这一错误。Raycast 当前不会回放这个 provider-specific field。</p>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <h2>问题是怎样发生的</h2>
+          <div class="grid">
+            <article class="card">
+              <h3>1. DeepSeek reasoning 后调用 tool</h3>
+              <p>Model response 同时包含 tool call 与 provider 要求的 <code>reasoning_content</code>。</p>
+            </article>
+            <article class="card">
+              <h3>2. Raycast 执行 tool</h3>
+              <p>Raycast 在下一次 Chat Completions request 中发送 tool result，但不包含前一次 DeepSeek reasoning 字段。</p>
+            </article>
+            <article class="card">
+              <h3>3. DeepSeek 拒绝继续</h3>
+              <p>缺少必要 reasoning state 时，provider 无法验证 thinking-mode tool turn。</p>
+            </article>
+          </div>
+          <div class="notice">
+            <strong>APIdapter 的修复方式</strong>
+            APIdapter 只捕获协议必需的 reasoning state，在受限内存中保存，并在下一次 request 中把它附加到匹配的 assistant tool-call message。
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <h2>修复步骤</h2>
+          <ol class="steps">
+            <li><strong>打开 Raycast chat 前先启动 APIdapter。</strong>检查 <code>http://127.0.0.1:48765/healthz</code>。</li>
+            <li><strong>把 APIdapter 设置为 Raycast base URL。</strong>直接请求 DeepSeek 会绕过 state repair。</li>
+            <li><strong>在整个 tool loop 期间保持 APIdapter 运行。</strong>重启会清空 in-memory reasoning state。</li>
+            <li><strong>重启后新建 chat。</strong>旧会话可能仍在引用已经不存在的 state。</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <h2>如果 APIdapter 返回 <code>reasoning_state_missing</code></h2>
+          <p class="section-intro">匹配 state 可能因为 daemon 重启、TTL 到期或容量限制被清除。这是刻意的安全边界：APIdapter 不会把 conversation state 持久化到磁盘。</p>
+          <div class="actions">
+            <a class="button" href="/apidapter/zh/#download">下载 APIdapter</a>
+            <a class="button secondary" href="https://api-docs.deepseek.com/guides/thinking_mode/">阅读 DeepSeek thinking-mode contract</a>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="shell site-footer">
+    <p>适用于 APIdapter v0.1.0 及其支持的 Raycast path。</p>
+    <p><a href="https://github.com/p1ac4/APIdapter/issues">报告其他问题</a></p>
+  </footer>
+</body>
+</html>

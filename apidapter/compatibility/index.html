@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APIdapter compatibility — Raycast and DeepSeek V4 Flash</title>
+  <meta name="description" content="Exact APIdapter v0.1.0 compatibility: Raycast Custom Provider, official DeepSeek V4 Flash, streaming reasoning, multi-turn tool calls, macOS arm64 and amd64.">
+  <link rel="canonical" href="https://p1ac4.github.io/apidapter/compatibility/">
+  <link rel="alternate" hreflang="en" href="https://p1ac4.github.io/apidapter/compatibility/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://p1ac4.github.io/apidapter/zh/compatibility/">
+  <link rel="alternate" hreflang="x-default" href="https://p1ac4.github.io/apidapter/compatibility/">
+  <meta property="og:title" content="APIdapter compatibility matrix">
+  <meta property="og:description" content="What APIdapter v0.1.0 supports, tests, and deliberately leaves out.">
+  <meta property="og:url" content="https://p1ac4.github.io/apidapter/compatibility/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="shell site-header">
+    <a class="brand" href="/apidapter/">APIdapter</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="/apidapter/">Overview</a>
+      <a href="https://github.com/p1ac4/APIdapter">Source</a>
+      <a lang="zh-Hans" href="/apidapter/zh/compatibility/">中文</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="shell hero">
+      <p class="eyebrow">Compatibility matrix · v0.1.0</p>
+      <h1>One supported path, tested end to end.</h1>
+      <p class="lede">APIdapter v0.1.0 is a focused Raycast-to-DeepSeek compatibility release. This page separates verified behavior from future product direction.</p>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <h2>Supported product path</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Layer</th><th>Supported in v0.1.0</th><th>Boundary</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>AI client</td><td>Raycast Custom Provider</td><td>Raycast must send the model and tools.</td></tr>
+              <tr><td>Local endpoint</td><td>OpenAI Chat Completions at <code>POST /chat/completions</code></td><td>Loopback listener only.</td></tr>
+              <tr><td>Model</td><td><code>deepseek-v4-flash</code></td><td>Other model IDs fail closed.</td></tr>
+              <tr><td>Provider</td><td>Official DeepSeek API</td><td>Fixed to <code>https://api.deepseek.com/chat/completions</code>.</td></tr>
+              <tr><td>Operating system</td><td>macOS arm64 and amd64</td><td>Release binaries are not currently published for Linux or Windows.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <h2>Protocol behavior</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Capability</th><th>Status</th><th>What APIdapter does</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Streaming text</td><td>Supported</td><td>Forwards SSE events immediately and flushes each event.</td></tr>
+              <tr><td>Streaming reasoning</td><td>Supported</td><td>Maps <code>reasoning_content</code> to the reasoning field Raycast displays.</td></tr>
+              <tr><td>Non-stream response</td><td>Supported</td><td>Translates the final reasoning field without SSE.</td></tr>
+              <tr><td>Single tool call</td><td>Supported</td><td>Normalizes request fields and response content.</td></tr>
+              <tr><td>Multi-turn tool calls</td><td>Supported</td><td>Replays bounded provider-required reasoning state across tool turns.</td></tr>
+              <tr><td>Cancellation</td><td>Supported</td><td>Propagates client cancellation to the upstream request.</td></tr>
+              <tr><td>Custom port</td><td>Supported</td><td>Use <code>--listen</code> or the JSON <code>listen</code> field.</td></tr>
+              <tr><td>Prompt and key persistence</td><td>Disabled by default</td><td>Content and credentials are not logged or persisted.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="notice">
+          <strong>Live completion evidence</strong>
+          The release path was tested on August 9, 2026 with two sequential Raycast Calculator tool calls followed by a final model answer.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <h2>Not supported yet</h2>
+        <div class="grid">
+          <article class="card"><h3>Other clients</h3><p>VS Code and Warp are not included in v0.1.0.</p></article>
+          <article class="card"><h3>Other API protocols</h3><p>Anthropic API and OpenAI Responses API are not included.</p></article>
+          <article class="card"><h3>Other runtime features</h3><p>Vision, multi-provider routing, UI, and automatic background installation are not included.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell site-footer">
+    <p>Compatibility is release-specific.</p>
+    <p><a href="/apidapter/#download">Download v0.1.0</a> · <a href="https://github.com/p1ac4/APIdapter/issues">Report an issue</a></p>
+  </footer>
+</body>
+</html>
